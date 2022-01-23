@@ -1,4 +1,5 @@
 import requests
+import datetime
 from bs4 import BeautifulSoup
 
 #Read from internet
@@ -14,6 +15,9 @@ doc = BeautifulSoup(result.text, "html.parser")
 
 tempBox = doc.find("ul", {"class":"ul-top-prediccion top-pred"})
 tempPredict = tempBox.find_all("li", {"class":"li-top-prediccion"})
+
+today = datetime.datetime.now()
+print (today.strftime("%Y-%m-%d %H:%M:%S"))
 
 for temperatura in tempPredict:
     lugar = temperatura.find("a", {"class":"anchors"})
