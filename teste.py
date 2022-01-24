@@ -4,11 +4,31 @@ import datetime
 from bs4 import BeautifulSoup
 
 while True:
+  #Get total time (HH:MM)
   localtime = time.localtime()
   result = time.strftime("%H:%M", localtime)
-  print(result)
+  #print(result)#Time
   
-  if result == "18:52":
+  
+  #Get hour and minutes
+  hour = time.strftime("%H", localtime)
+  minutes = time.strftime("%M", localtime)
+  
+  minutes = int(minutes)+1
+  if minutes >= 60:
+    hour = int(hour)+1
+    minutes = 0
+    if hour >= 24:
+      hour = str(hour)
+      hour = "00"
+  hour = str(hour)
+  minutes = str(minutes)
+  nextTime = hour+ ":" + minutes
+      
+  print("Nextime: " + nextTime)
+  
+  
+  if result == nextTime:
     #Executar report tempo!
     
     #Store time
