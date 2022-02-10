@@ -2,7 +2,7 @@ import requests
 import datetime
 from bs4 import BeautifulSoup
 
-#Get today time
+#Get today temp
 def atualtemp():
     #Read from internet
     #Get info from URL
@@ -29,10 +29,11 @@ def atualtemp():
     print("")
     init()
     
+#Temp. today -> 7 days(weektemp)    
 def amanhaTemp():
     #Read from internet
     #Get info from URL
-    print("*** TEMPO AMANHA ***")
+    print("*** TEMPO ATE 7 DIAS ***")
     url = ['https://www.tempo.pt/calheta.htm','https://www.tempo.pt/camara-de-lobos.htm','https://www.tempo.pt/funchal.htm','https://www.tempo.pt/machico.htm','https://www.tempo.pt/ponta-do-sol.htm','https://www.tempo.pt/porto-moniz.htm','https://www.tempo.pt/ribeira-brava.htm','https://www.tempo.pt/santa-cruz_madeira-l32099.htm','https://www.tempo.pt/santana.htm','https://www.tempo.pt/sao-vicente.htm']
     lugares = ["Calheta","Camara de Lobos","Funchal","Machico","Ponta de Sol","Porto Moniz","Ribeira Brava","Santa Cruz","Santana","São Vicente"]
     
@@ -60,9 +61,10 @@ def amanhaTemp():
             Temp = li.find("span", {"class": "temperatura"})
             maxTemp = Temp.find("span", {"class": "maxima changeUnitT"})
             minTemp = Temp.find("span", {"class": "minima changeUnitT"})
-            print("Dia"+str(i)+" "+str(maxTemp.string)+""+str(minTemp.string))
+            print("Dia "+str(i)+" "+str(maxTemp.string)+""+str(minTemp.string))
             i+=1
             if i == 7:
+                print("")
                 break
             #minTemp = temperatura.find("span", {"class": "cMin changeUnitT"})
             #print(str(minTemp.string))
@@ -73,7 +75,7 @@ def amanhaTemp():
 def init():
     print("***METEOROLOGIA***")
     print("1- ATUAL")
-    print("2- AMANHA")
+    print("2- HOJE ATE 7 DIAS")
     print("")
     op = input("")
     
