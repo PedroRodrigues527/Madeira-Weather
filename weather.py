@@ -1,8 +1,16 @@
+"""
+Author: Pedro Rodrigues;
+Description: Retrieve weather information about Madeira 
+             Island using python (Webscraping);
+2022
+"""
+
+
 import requests
 import datetime
 from bs4 import BeautifulSoup
 
-#Get today temp
+#Get today weather
 def atualtemp():
     #Read from internet
     #Get info from URL
@@ -28,8 +36,8 @@ def atualtemp():
         print(str(lugar.string) + " Max: " + str(maxTemp.string) + " Min: " + str(minTemp.string))
     print("")
     init()
-    
-#Temp. today -> 7 days(weektemp)    
+
+#Get all week information
 def amanhaTemp():
     #Read from internet
     #Get info from URL
@@ -55,7 +63,7 @@ def amanhaTemp():
         
         liTemp = tempBox.find_all("li")
         
-        i = 0
+        i = 0 #control of week
         for li in liTemp:
             #semana = li.find("span", {"class": "cuando"})
             Temp = li.find("span", {"class": "temperatura"})
@@ -66,9 +74,6 @@ def amanhaTemp():
             if i == 7:
                 print("")
                 break
-            #minTemp = temperatura.find("span", {"class": "cMin changeUnitT"})
-            #print(str(minTemp.string))
-            #print(str(lugar.string) + " Max: " + str(maxTemp.string) + " Min: " + str(minTemp.string))
     print("")
     init()    
 
