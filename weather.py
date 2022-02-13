@@ -136,10 +136,12 @@ def amanhaTemp():
         i = 0 #control of week
         for li in liTemp:
             #semana = li.find("span", {"class": "cuando"})
+            dia = li.find("span",{"class": "cuando"})
+            
             Temp = li.find("span", {"class": "temperatura"})
             maxTemp = Temp.find("span", {"class": "maxima changeUnitT"})
             minTemp = Temp.find("span", {"class": "minima changeUnitT"})
-            print("Dia "+str(i)+" Max:"+str(maxTemp.string)+" Min:"+str(minTemp.string))
+            print(str(dia.text)+" Max:"+str(maxTemp.string)+" Min:"+str(minTemp.string))
             i+=1
             if i == 7:
                 print("")
