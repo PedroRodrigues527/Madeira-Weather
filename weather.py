@@ -7,6 +7,7 @@ Description: Retrieve weather information about Madeira
 
 import requests
 import datetime
+from os import system, name
 from bs4 import BeautifulSoup
 
 url = ['https://www.tempo.pt/calheta.htm','https://www.tempo.pt/camara-de-lobos.htm','https://www.tempo.pt/funchal.htm','https://www.tempo.pt/machico.htm','https://www.tempo.pt/ponta-do-sol.htm','https://www.tempo.pt/porto-moniz.htm','https://www.tempo.pt/ribeira-brava.htm','https://www.tempo.pt/santa-cruz_madeira-l32099.htm','https://www.tempo.pt/santana.htm','https://www.tempo.pt/sao-vicente.htm']
@@ -14,6 +15,7 @@ url = ['https://www.tempo.pt/calheta.htm','https://www.tempo.pt/camara-de-lobos.
 lugares = ["Calheta","Camara de Lobos","Funchal","Machico","Ponta de Sol","Porto Moniz","Ribeira Brava","Santa Cruz","Santana","São Vicente"]
 
 def places():
+    clean()
     print("***ESPECIFICO***")
     index = 1
     for lugar in range(len(lugares)-1):
@@ -148,6 +150,15 @@ def amanhaTemp():
                 break
     print("")
     init()    
+    
+#cleaning console
+def clean():
+    if name == 'nt':  # If Machine is running on 
+        system('cls')
+    else: #posix
+        system('clear')
+        #print("LINUX: ")            
+
 
 def init():
     print("***METEOROLOGIA***")
@@ -158,12 +169,16 @@ def init():
     op = input("")
     
     if op == '1':
+        clean()
         atualtemp()
     elif op == '2':
+        clean()
         amanhaTemp()
     elif op == '3':
+        clean()
         places()    
-    else:   
+    else:
+        clean()
         print("TENTE NOVAMENTE")
         init()
 
