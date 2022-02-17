@@ -43,5 +43,5 @@ Execute 'run.sh' script
 </br>
 Command: ./run.sh
 </br>
-Otherwise install modules then execute run.sh
+Otherwise install modules by executing ***'modules.sh'***, then execute run.sh
 
