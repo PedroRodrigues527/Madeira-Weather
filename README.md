@@ -7,12 +7,13 @@ Simple webscrapping project using python (beatifull soup) to retrieve weather in
 ![Screenshot from 2022-02-17 12-55-05](https://user-images.githubusercontent.com/61146730/154486541-abf338f4-0d35-410a-96d8-cd78fa659dd5.png)
 
 </br>
-</br>
 *Today weather*
-</br>
+
+
 ![Screenshot from 2022-02-17 12-56-49](https://user-images.githubusercontent.com/61146730/154486591-9977c6a9-ac13-45ee-8510-7f4de4504447.png)
+
 </br>
-</br>
+
 *All Week Temperature, all locations*
 </br>
 ![Screenshot from 2022-02-17 12-57-20](https://user-images.githubusercontent.com/61146730/154486717-a2c25c81-6264-49b5-b888-b91082a07d93.png)
