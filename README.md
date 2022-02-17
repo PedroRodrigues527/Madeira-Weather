@@ -47,3 +47,6 @@ Otherwise install modules by executing **'modules.sh'**, then execute run.sh
 </br>
 Command: ./modules.sh
 
+### Windows
+To install modules execute the **modules.bat**.
+After the installation to execute the code, run the **run.bat**.
