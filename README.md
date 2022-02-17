@@ -33,6 +33,12 @@
 </br>
 
 ## 2 How to run:
-Linux: run 'run.sh' script
+
+### Linux
+If you have the python modules (datetime, requests, bs4):
+Execute 'run.sh' script
 </br>
 Command: ./run.sh
+</br>
+Otherwise install modules then execute run.sh
+
