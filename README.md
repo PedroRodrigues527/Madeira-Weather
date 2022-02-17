@@ -29,8 +29,11 @@
 
 ### Local Specific weather
 </br>
+
 ![Screenshot from 2022-02-17 12-57-40](https://user-images.githubusercontent.com/61146730/154486845-d15346f4-5b53-41f1-a371-9210c765cac5.png)
+
 </br>
+
 
 ## 2 How to run:
 
