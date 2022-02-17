@@ -39,9 +39,11 @@
 
 ### Linux
 If you have the python modules (datetime, requests, bs4):
-Execute 'run.sh' script
+Execute **'run.sh'** script
 </br>
 Command: ./run.sh
 </br>
-Otherwise install modules by executing ***'modules.sh'***, then execute run.sh
+Otherwise install modules by executing **'modules.sh'**, then execute run.sh
+</br>
+Command: ./modules.sh
 
