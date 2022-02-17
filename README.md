@@ -34,4 +34,5 @@
 
 ## 2 How to run:
 Linux: run 'run.sh' script
+</br>
 Command: ./run.sh
