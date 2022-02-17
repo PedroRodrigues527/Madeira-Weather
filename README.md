@@ -1,4 +1,3 @@
 # Madeira-Weather
-web scrapper with python to retrieve info about the weather
 
-Simple webscrapping project using python (beatifull soup)
+Simple webscrapping project using python (beatifull soup) to retrieve weather information (about madeira island)
