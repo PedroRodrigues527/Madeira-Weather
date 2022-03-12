@@ -24,59 +24,23 @@ def places():
     op = input("")
     
     #ATUAL DE LUGAR
-    if op == '1': 
-        print("INFO: CALHETA")
-        atualtempEsp(lugares[0])
-    elif op == '2':
-        print("INFO: CAMERA DE LOBOS")
-        atualtempEsp(lugares[1])
-    elif op == '3':
-        print("INFO: FUNCHAL")
-        atualtempEsp(lugares[2])
-    elif op == '4':
-        print("INFO: MACHICO")
-        atualtempEsp(lugares[3])
-    elif op == '5':
-        print("INFO: PONTA DE SOL")
-        atualtempEsp(lugares[4])
-    elif op == '6':
-        print("INFO: PORTO MONIZ")
-        atualtempEsp(lugares[5])
-    elif op == '7':
-        print("INFO: RIBEIRA BRAVA")
-        atualtempEsp(lugares[6])
-    elif op == '8':
-        print("INFO: SANTA CRUZ")
-        atualtempEsp(lugares[7])
-    elif op == '9':
-        print("INFO: SANTANA")
-        atualtempEsp(lugares[8])
-    else:
-        print("OPCAO INVALIDA")
-        places()
+    try:
+        print("");
+        print("Info: "+ lugares[int(op)-1])
+        atualtempEsp(lugares[int(op)-1])
+    except:
+        print("Utilize opção correta e apenas caracteres numericos")
         
-#Get today weather
 def atualtempEsp(lugarStr):
-    #Read from internet
-    #Get info from URL
-    url = 'https://www.tempo.pt/madeira-provincia.htm'
-    result = requests.get(url) #GET request
-    #print(result.text)
-    
-    doc = BeautifulSoup(result.text, "html.parser")
-    #print(doc.prettify())
-    
-    #Tempo madeira
-    tempBox = doc.find("ul", {"class":"ul-top-prediccion top-pred"})
+    connect('https://www.tempo.pt/madeira-provincia.htm')
+    tempBox = connect('https://www.tempo.pt/madeira-provincia.htm').find("ul", {"class":"ul-top-prediccion top-pred"})
     tempPredict = tempBox.find_all("li", {"class":"li-top-prediccion"})
-    
     today = datetime.datetime.now()
-    print (today.strftime("%Y-%m-%d %H:%M:%S"))
     
+    print (today.strftime("%Y-%m-%d %H:%M:%S"))
+
     for temperatura in tempPredict:
         lugar = temperatura.find("a", {"class":"anchors"})
-        #print(str(lugar.string))
-        #print(lugarStr)
         if lugarStr == str(lugar.string):
             maxTemp = temperatura.find("span", {"class": "cMax changeUnitT"})
             minTemp = temperatura.find("span", {"class": "cMin changeUnitT"})
@@ -84,20 +48,14 @@ def atualtempEsp(lugarStr):
     print("")
     init()
 
-#Get today weather
-def atualtemp():
-    #Read from internet
-    #Get info from URL
-    print("*** TEMPO ATUAL ***")
-    url = 'https://www.tempo.pt/madeira-provincia.htm'
-    result = requests.get(url) #GET request
-    #print(result.text)
-    
+def connect(link):
+    url = link
+    result = requests.get(url)
     doc = BeautifulSoup(result.text, "html.parser")
-    #print(doc.prettify())
-    
-    #Tempo madeira
-    tempBox = doc.find("ul", {"class":"ul-top-prediccion top-pred"})
+    return doc
+
+def atualtemp():
+    tempBox = connect('https://www.tempo.pt/madeira-provincia.htm').find("ul", {"class":"ul-top-prediccion top-pred"})
     tempPredict = tempBox.find_all("li", {"class":"li-top-prediccion"})
     
     today = datetime.datetime.now()
@@ -111,33 +69,15 @@ def atualtemp():
     print("")
     init()
 
-#Get all week information
 def amanhaTemp():
-    #Read from internet
-    #Get info from URL
     print("*** TEMPO ATE 7 DIAS ***")
     
     for i in range(len(url)):
-        result = requests.get(url[i]) #GET request
-        #print(result.text)
-        #print(result)
-        
-        doc = BeautifulSoup(result.text, "html.parser")
-        #print(doc.prettify())
-        
-        #Tempo madeira
         print(lugares[i])
-        tempBox = doc.find("span", {"class":"datos-dos-semanas"})
-        #tempSpan = tempBox.find("span",{"class":"datos-dos-semanas"})
-        #tempPredict = tempSpan.find_all("li")
-        #print(tempBox)
-        
-        
-        liTemp = tempBox.find_all("li")
-        
+        tempBox = connect(url[i]).find("span", {"class":"datos-dos-semanas"})
+        liTemp = tempBox.find_all("li")  
         i = 0 #control of week
         for li in liTemp:
-            #semana = li.find("span", {"class": "cuando"})
             dia = li.find("span",{"class": "cuando"})
             
             Temp = li.find("span", {"class": "temperatura"})
@@ -153,11 +93,11 @@ def amanhaTemp():
     
 #cleaning console
 def clean():
-    if name == 'nt':  # If Machine is running on 
+    if name == 'nt':
         system('cls')
-    else: #posix
+    else:
         system('clear')
-        #print("LINUX: ")            
+          
 
 
 def init():
@@ -168,19 +108,15 @@ def init():
     print("")
     op = input("")
     
-    if op == '1':
-        clean()
+    if op == '1':     
         atualtemp()
-    elif op == '2':
-        clean()
+    elif op == '2':  
         amanhaTemp()
     elif op == '3':
-        clean()
         places()    
     else:
-        clean()
         print("TENTE NOVAMENTE")
         init()
 
-if name == '__main__':
-  init()
+if __name__=='__main__':
+    init()
