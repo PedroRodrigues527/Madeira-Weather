@@ -182,4 +182,5 @@ def init():
         print("TENTE NOVAMENTE")
         init()
 
-init()
+if name == '__main__':
+  init()
