@@ -96,12 +96,16 @@ def amanhaTemp():
     init()    
     
 def saveToFile(content, file):
-    with open(file, 'w') as f:
-        for strings in content:
-            f.write(strings)
-            #f.write("\n")
-        print("Content saved with success")    
-    
+    try:
+        with open(file, 'w') as f:
+            for strings in content:
+                f.write(strings)
+                #f.write("\n")
+            print("Content saved with success")    
+    except:
+        print("Erro has occurred aborting!")
+        
+        
 #cleaning console
 def clean():
     if name == 'nt':
