@@ -7,6 +7,7 @@ Description: Retrieve weather information about Madeira
 
 import requests
 import datetime
+import yagmail
 from os import system, name
 from bs4 import BeautifulSoup
 
@@ -64,7 +65,7 @@ def atualtemp():
         textStr = str(lugar.string) + " Max: " + str(maxTemp.string) + " Min: " + str(minTemp.string) + "\n";
         text.append(textStr)
     print("")
-    saveToFile(text, "weatherAtual.txt")
+    saveToFile(text, "weather.txt")
     init()
 
 def amanhaTemp():
@@ -91,20 +92,18 @@ def amanhaTemp():
                 text.append("\n")
                 print("")
                 break
-        saveToFile(text, "weatherWeek.txt")
+        saveToFile(text, "weather.txt")
     print("")
     init()    
     
 def saveToFile(content, file):
-    try:
-        with open(file, 'w') as f:
-            for strings in content:
-                f.write(strings)
-                #f.write("\n")
-            print("Content saved with success")    
-    except:
-        print("Erro has occurred aborting!")
-        
+    
+    with open(file, 'w') as f:
+        for strings in content:
+            f.write(strings)
+            #f.write("\n")
+        print("Content saved with success")
+    
         
 #cleaning console
 def clean():
@@ -112,6 +111,14 @@ def clean():
         system('cls')
     else:
         system('clear')
+
+def sendEmail():
+    yag = yagmail.SMTP('xxx@gmail.com', 'xxx')
+    yag.send('xxx@gmail.com', 'Weather Report', "Weather Report", 'weather.txt')
+    print("Enviando por email...")
+    print("Enviado")
+    # Alternatively, with a simple one-liner:
+    #yagmail.SMTP('lantransferwebsite').send('to@someone.com', 'subject', contents)    
 
 def time():
     today = datetime.datetime.now()
@@ -123,6 +130,7 @@ def init():
     print("1- ATUAL")
     print("2- HOJE ATE 7 DIAS")
     print("3- ESPECIFICO")
+    print("4- Enviar por email")
     print("")
     op = input("")
     
@@ -132,7 +140,9 @@ def init():
         elif op == '2':  
             amanhaTemp()
         elif op == '3':
-            places()    
+            places()
+        elif op == '4':
+            sendEmail()
     except:
 
         print("Option not valid\nUse only numerical caracters between 1 and 3")
