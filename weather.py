@@ -113,12 +113,11 @@ def clean():
         system('clear')
 
 def sendEmail():
+    userEmail = input("Insira o seu email: ")
     yag = yagmail.SMTP('xxx@gmail.com', 'xxx')
-    yag.send('xxx@gmail.com', 'Weather Report', "Weather Report", 'weather.txt')
+    yag.send(userEmail, 'Weather Report', "Weather Report", 'weather.txt')
     print("Enviando por email...")
     print("Enviado")
-    # Alternatively, with a simple one-liner:
-    #yagmail.SMTP('lantransferwebsite').send('to@someone.com', 'subject', contents)    
 
 def time():
     today = datetime.datetime.now()
