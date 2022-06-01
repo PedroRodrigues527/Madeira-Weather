@@ -22,6 +22,7 @@ lugares: list[str] = ["Calheta", "Camara de Lobos", "Funchal", "Machico", "Ponta
                       "Ribeira Brava", "Santa Cruz", "Santana", "São Vicente"]
 
 
+
 def showLugares():
     for lugar in range(len(lugares) - 1):
         print(str(lugar) + "- " + lugares[lugar])
@@ -34,8 +35,8 @@ def places():
 
     try:
         print("")
-        print("Info: " + lugares[int(city) - 1])
-        atualTempoEspecifico(lugares[int(city) - 1])
+        print("Info: " + lugares[int(city)])
+        atualTempoEspecifico(lugares[int(city)])
     except IndexError:
         print("Utilize opção correta e apenas caracteres numericos")
         places()
@@ -50,7 +51,7 @@ def atualTempoEspecifico(place):
         if place == str(temperatura.find("a", {"class": "anchors"}).string):
             maxTemp = temperatura.find("span", {"class": "cMax changeUnitT"})
             minTemp = temperatura.find("span", {"class": "cMin changeUnitT"})
-            print(str(lugar.string) + " Max: " + str(maxTemp.string) + " Min: " + str(minTemp.string))
+            display(str(lugar.string), str(maxTemp.string), str(minTemp.string))
     print("")
     init()
 
@@ -60,24 +61,35 @@ def connect(link):
     doc = BeautifulSoup(result.text, "html.parser")
     return doc
 
+def display(lugar, max_temp, min_temp):
+    global output
+    output = lugar
+    MAX_SIZE = 16
+    MAX_SIZE_TEMPERATURE = 10
+    if len(lugar) <= MAX_SIZE:
+        for space in range(MAX_SIZE - len(lugar)):
+            output = output + " "
+    output = output + " Max: " + max_temp
+    output = output + " Min: " + min_temp
+    print(output)
+
 
 def atualTempo():
     tempBox = connect('https://www.tempo.pt/madeira-provincia.htm').find("ul", {"class": "ul-top-prediccion top-pred"})
     tempPredict = tempBox.find_all("li", {"class": "li-top-prediccion"})
-
     time()
     text = []
     for temperatura in tempPredict:
         lugar = temperatura.find("a", {"class": "anchors"})
         maxTemp = temperatura.find("span", {"class": "cMax changeUnitT"})
         minTemp = temperatura.find("span", {"class": "cMin changeUnitT"})
-        print(str(lugar.string) + " Max: " + str(maxTemp.string) + " Min: " + str(minTemp.string))
-        textStr = str(lugar.string) + " Max: " + str(maxTemp.string) + " Min: " + str(minTemp.string) + "\n";
-        text.append(textStr)
+        display(str(lugar.string), str(maxTemp.string), str(minTemp.string))
+        text.append(output)
+
     print("")
     saveToFile(text, "weather.txt")
     time()
-    #init()
+    init()
 
 
 def weekTempo():
@@ -95,9 +107,35 @@ def weekTempo():
                 Temp = li.find("span", {"class": "temperatura"})
                 maxTemp = Temp.find("span", {"class": "maxima changeUnitT"})
                 minTemp = Temp.find("span", {"class": "minima changeUnitT"})
-                textStr = str(dia.text) + " Max:" + str(maxTemp.string) + " Min:" + str(minTemp.string) + "\n"
-                print(textStr)
-                text.append(textStr)
+
+                MAX_SIZE_DAY = 15
+
+                MAX_SIZE = 12
+                letters = ""
+                month = ""
+                number = ""
+
+
+                #Identify number and month from string
+                for char in range(len(str(dia.text))):
+                    if dia.text[char].isnumeric():
+                        for size in range(MAX_SIZE_DAY - char):
+                            number = str(dia.text[char])
+                    elif str(dia.text[char]) == "J":
+                        for size in range(MAX_SIZE_DAY - char):
+                            month += " "
+                        letters = letters + month + "J"
+                    else:
+                        letters = letters + str(dia.text[char])
+
+                finalString = letters
+                if len(letters) <= MAX_SIZE:
+                    for space in range(MAX_SIZE - len(letters)):
+                        finalString = finalString + " "
+                finalString = finalString + number
+
+                display(str(finalString), str(maxTemp.string), str(minTemp.string))
+                text.append(output)
                 day_of_the_week += 1
                 if day_of_the_week == 7: #Fim da semana
                     text.append("\n")
