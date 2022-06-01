@@ -9,7 +9,7 @@
 
 ### Menu
 
-![Screenshot from 2022-02-17 12-55-05](https://user-images.githubusercontent.com/61146730/154486541-abf338f4-0d35-410a-96d8-cd78fa659dd5.png)
+![Screenshot from 2022-06-01 22-20-49](https://user-images.githubusercontent.com/61146730/171505177-df5787d4-6f86-4116-b0b4-8a2f01b2b61c.png)
 
 </br>
 
