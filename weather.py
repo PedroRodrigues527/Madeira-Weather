@@ -170,7 +170,7 @@ def clean():
 def sendEmail():
     try:
         user_email = input("Insira o seu email: ")
-        yag = yagmail.SMTP('lantransferwebsite@gmail.com', 'webserver123')
+        yag = yagmail.SMTP('xxx@gmail.com', 'xxx')
         yag.send(user_email, 'Weather Report', "Weather Report", 'weather.txt')
         print("Enviando por email...")
         print("Enviado")
