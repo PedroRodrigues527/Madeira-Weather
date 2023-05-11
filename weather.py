@@ -5,12 +5,13 @@ Description: Retrieve weather information about Madeira
 2022
 """
 from typing import List
-
-import requests
 import datetime
 import yagmail
-from os import system, name
-from bs4 import BeautifulSoup
+from connection.bs4_connect import connect
+from connection.webdriver_connect import webdriverConnect
+from utils.clean_screen import clean
+from utils.save_file import saveToFile
+
 
 url = ['https://www.tempo.pt/calheta.htm', 'https://www.tempo.pt/camara-de-lobos.htm',
        'https://www.tempo.pt/funchal.htm', 'https://www.tempo.pt/machico.htm', 'https://www.tempo.pt/ponta-do-sol.htm',
@@ -20,8 +21,6 @@ url = ['https://www.tempo.pt/calheta.htm', 'https://www.tempo.pt/camara-de-lobos
 
 lugares: list[str] = ["Calheta", "Camara de Lobos", "Funchal", "Machico", "Ponta de Sol", "Porto Moniz",
                       "Ribeira Brava", "Santa Cruz", "Santana", "São Vicente"]
-
-
 
 def showLugares():
     for lugar in range(len(lugares) - 1):
@@ -41,7 +40,6 @@ def places():
         print("Utilize opção correta e apenas caracteres numericos")
         places()
 
-
 def atualTempoEspecifico(place):
     tempBox = connect('https://www.tempo.pt/madeira-provincia.htm').find("ul", {"class": "ul-top-prediccion top-pred"})
     tempPredict = tempBox.find_all("li", {"class": "li-top-prediccion"})
@@ -54,12 +52,6 @@ def atualTempoEspecifico(place):
             display(str(lugar.string), str(maxTemp.string), str(minTemp.string))
     print("")
     init()
-
-
-def connect(link):
-    result = requests.get(link)
-    doc = BeautifulSoup(result.text, "html.parser")
-    return doc
 
 def display(lugar, max_temp, min_temp):
     global output
@@ -75,18 +67,32 @@ def display(lugar, max_temp, min_temp):
 
 
 def atualTempo():
-    tempBox = connect('https://www.tempo.pt/madeira-provincia.htm').find("ul", {"class": "ul-top-prediccion top-pred"})
+    """ tempBox = connect('https://www.tempo.pt/madeira-provincia.htm').find("ul", {"class": "ul-top-prediccion top-pred"})
     tempPredict = tempBox.find_all("li", {"class": "li-top-prediccion"})
     time()
-    text = []
+    
     for temperatura in tempPredict:
         lugar = temperatura.find("a", {"class": "anchors"})
         maxTemp = temperatura.find("span", {"class": "cMax changeUnitT"})
         minTemp = temperatura.find("span", {"class": "cMin changeUnitT"})
         display(str(lugar.string), str(maxTemp.string), str(minTemp.string))
-        text.append(output)
+        text.append(output) """
 
-    print("")
+    """ tempBox = connect("https://www.tempo.pt/madeira-provincia.htm").find("section").find("div",{"id":"mapaNew"}) """
+
+    connection = webdriverConnect('https://www.tempo.pt/madeira-provincia.htm')
+
+    tempBox = connection.find("section").find("div", {"id": "mapaNew"}).find("div", {"class": "leaflet-pane leaflet-marker-pane"}).find_all("a")
+
+    text = []
+    for element in tempBox:
+        location_name = element.find_all("span")[-1].text
+        max_temperature = element.find("span",{"class": "red changeUnitT"}).text
+        min_temperature = element.find("span",{"class": "blue changeUnitT"}).text
+
+        display(str(location_name), str(max_temperature), str(min_temperature))
+        text.append(output+"\n")
+
     saveToFile(text, "weather.txt")
     time()
     init()
@@ -147,26 +153,6 @@ def weekTempo():
     print("")
     init()
 
-
-def saveToFile(content, file):
-    try:
-        with open(file, 'w') as f:
-            for strings in content:
-                f.write(strings)
-            print("Content saved with success")
-    except FileExistsError as e:
-        print("Error opening the file\n"+e)
-    except FileNotFoundError as e:
-        print("File not Found\n"+e)
-
-# cleaning console
-def clean():
-    if name == 'nt':
-        system('cls')
-    else:
-        system('clear')
-
-
 def sendEmail():
     try:
         user_email = input("Insira o seu email: ")
@@ -183,11 +169,9 @@ def sendEmail():
     except ConnectionRefusedError as e:
         print("Error connection refused.\n" + e)
 
-
 def time():
     today = datetime.datetime.now()
     print(today.strftime("%Y-%m-%d %H:%M:%S.%f"))
-
 
 def showMainMenu():
     print("***METEOROLOGIA***")
@@ -215,4 +199,4 @@ def init():
 
 
 if __name__ == '__main__':
-    init()
+    init() 
